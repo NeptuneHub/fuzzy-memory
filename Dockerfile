@@ -42,14 +42,15 @@ RUN ARCH=$(dpkg --print-architecture) && \
 RUN chown -R radarr:radarr /opt/Radarr /var/lib/radarr
 
 # Install Sonarr
-RUN groupadd -r sonarr && useradd -r -g sonarr sonarr
-RUN mkdir -p /opt/Sonarr /var/lib/sonarr
-RUN ARCH=$(dpkg --print-architecture) && \
-    DLURL="https://sonarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=${ARCH}" && \
-    curl -L -o /tmp/sonarr.tar.gz $DLURL && \
-    tar -xzf /tmp/sonarr.tar.gz -C /opt/Sonarr --strip-components=1 && \
-    rm /tmp/sonarr.tar.gz
-RUN chown -R sonarr:sonarr /opt/Sonarr /var/lib/sonarr
+RUN wget -qO- https://raw.githubusercontent.com/Sonarr/Sonarr/develop/distribution/debian/install.sh | bash
+#RUN groupadd -r sonarr && useradd -r -g sonarr sonarr
+#RUN mkdir -p /opt/Sonarr /var/lib/sonarr
+#RUN ARCH=$(dpkg --print-architecture) && \
+#    DLURL="https://sonarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=${ARCH}" && \
+#    curl -L -o /tmp/sonarr.tar.gz $DLURL && \
+#    tar -xzf /tmp/sonarr.tar.gz -C /opt/Sonarr --strip-components=1 && \
+#    rm /tmp/sonarr.tar.gz
+#RUN chown -R sonarr:sonarr /opt/Sonarr /var/lib/sonarr
 
 # Install Jackett
 RUN groupadd -r jackett && useradd -r -g jackett jackett
