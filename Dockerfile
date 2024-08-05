@@ -56,8 +56,10 @@ RUN wget -qO- https://raw.githubusercontent.com/Sonarr/Sonarr/develop/distributi
 RUN groupadd -r jackett && useradd -r -g jackett jackett
 RUN mkdir -p /opt/Jackett /var/lib/jackett
 RUN ARCH=$(dpkg --print-architecture) && \
-    DLURL="https://github.com/Jackett/Jackett/releases/download/v0.20.3502/Jackett.Binaries.Linux.${ARCH}.tar.gz" && \
-    curl -L -o /tmp/jackett.tar.gz $DLURL && \
+    DLURL="https://github.com/Jackett/Jackett/releases/latest/download/Jackett.Binaries.Linux${ARCH}.tar.gz" && \
+    echo "Downloading Jackett from $DLURL" && \
+    wget -q -O /tmp/jackett.tar.gz $DLURL && \
+    echo "Extracting Jackett" && \
     tar -xzf /tmp/jackett.tar.gz -C /opt/Jackett --strip-components=1 && \
     rm /tmp/jackett.tar.gz
 RUN chown -R jackett:jackett /opt/Jackett /var/lib/jackett
